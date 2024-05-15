@@ -1,0 +1,31 @@
+{
+  "transform": {
+    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.js$": "babel-jest"
+  },
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(ts?|tsx?)$",
+  "setupFiles": [
+    "<rootDir>/jest.setup.js"
+  ],
+  "moduleNameMapper": {
+    "@ms/odsp-core-bundle": "identity-obj-proxy",
+    "\\.(css|scss|resx)$": "identity-obj-proxy",
+    "\\.(png|jpg)$": "<rootDir>/src/webparts/recentlyVisitedSites/tests/file-stub.ts",
+    "^resx-strings/en-us.json": "<rootDir>/node_modules/@microsoft/sp-core-library/lib/resx-strings/en-us.json",
+    "RecentlyVisitedSitesWebPartStrings": "<rootDir>/src/webparts/recentlyVisitedSites/loc/en-us.js",
+    "ControlStrings": "<rootDir>/node_modules/@pnp/spfx-controls-react/lib/loc/en-us.js"
+  },
+  "moduleDirectories": [
+    "node_modules"
+  ],
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js",
+    "json"
+  ],
+  "testEnvironment": "jsdom",
+  "transformIgnorePatterns": [
+    "node_modules/(?!(@pnp|@uifabric|office-ui-fabric-react|@microsoft/sp-core-library|@microsoft/sp-http|@microsoft/sp-diagnostics|@microsoft/decorators|@microsoft/sp-page-context|@microsoft/sp-dynamic-data)/)"
+  ]
+}
