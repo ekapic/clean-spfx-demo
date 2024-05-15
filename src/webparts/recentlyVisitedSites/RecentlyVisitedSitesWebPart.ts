@@ -7,8 +7,10 @@ import { RecentlyVisitedSites, IRecentlyVisitedSitesProps } from './components';
 import { MSGraphClientV3 } from '@microsoft/sp-http';
 
 import { ThemeProvider, ThemeChangedEventArgs, IReadonlyTheme } from '@microsoft/sp-component-base';
-import { IGraphService } from "./services/IGraphService";
-import GraphService from "./services/GraphService";
+import { IGraphService } from "./services/core/IGraphService";
+import { IRecentSiteService } from "./services/business/IRecentSiteService";
+import GraphRecentSiteService from "./services/business/GraphRecentSiteService";
+import GraphService from "./services/core/GraphService";
 //import MockGraphService from "./services/MockGraphService";
 
 export interface IRecentlyVisitedSitesWebPartProps {
@@ -17,6 +19,7 @@ export interface IRecentlyVisitedSitesWebPartProps {
 
 export default class RecentlyVisitedSitesWebPart extends BaseClientSideWebPart<IRecentlyVisitedSitesWebPartProps> {
   private _graphService: IGraphService;
+  private _siteService: IRecentSiteService;
   // theme provider
   private _themeProvider: ThemeProvider;
   // current theme
@@ -43,6 +46,7 @@ export default class RecentlyVisitedSitesWebPart extends BaseClientSideWebPart<I
           (client: MSGraphClientV3): void => {
             //this._graphService = new MockGraphService();
             this._graphService = new GraphService(client);
+            this._siteService = new GraphRecentSiteService(this._graphService);
             resolve();
           },
           (err) => reject(err)
@@ -55,7 +59,7 @@ export default class RecentlyVisitedSitesWebPart extends BaseClientSideWebPart<I
     const element: React.ReactElement<IRecentlyVisitedSitesProps> =
       React.createElement(RecentlyVisitedSites, {
         title: this.properties.title,
-        graphService: this._graphService,
+        siteService: this._siteService,
         displayMode: this.displayMode,
         themeVariant: this._themeVariant,
         updateProperty: (value: string) => {

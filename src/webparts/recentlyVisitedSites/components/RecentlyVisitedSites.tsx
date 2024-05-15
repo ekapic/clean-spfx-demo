@@ -18,7 +18,7 @@ export const RecentlyVisitedSites: React.FC<IRecentlyVisitedSitesProps> = (
    * componentDidMount lifecycle hook
    */
   useEffect(() => {
-    props.graphService
+    props.siteService
       .getRecentVisitedSites()
       .then((sites) => {
         setUsedSites(sites);
