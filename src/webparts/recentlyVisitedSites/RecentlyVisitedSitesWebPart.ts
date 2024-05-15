@@ -8,8 +8,8 @@ import { MSGraphClientV3 } from '@microsoft/sp-http';
 
 import { ThemeProvider, ThemeChangedEventArgs, IReadonlyTheme } from '@microsoft/sp-component-base';
 import { IGraphService } from "./services/IGraphService";
-//import GraphService from "./services/GraphService";
-import MockGraphService from "./services/MockGraphService";
+import GraphService from "./services/GraphService";
+//import MockGraphService from "./services/MockGraphService";
 
 export interface IRecentlyVisitedSitesWebPartProps {
   title: string;
@@ -41,8 +41,8 @@ export default class RecentlyVisitedSitesWebPart extends BaseClientSideWebPart<I
       (resolve: () => void, reject: (error: any) => void): void => {
         this.context.msGraphClientFactory.getClient("3").then(
           (client: MSGraphClientV3): void => {
-            this._graphService = new MockGraphService();
-            //this._graphService = new GraphService(client);
+            //this._graphService = new MockGraphService();
+            this._graphService = new GraphService(client);
             resolve();
           },
           (err) => reject(err)

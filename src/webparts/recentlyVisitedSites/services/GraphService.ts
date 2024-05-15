@@ -12,31 +12,34 @@ export default class GraphService implements IGraphService {
   private _graphClient: MSGraphClientV3;
 
   public getRecentVisitedSites(): Promise<IWebs[]> {
-    if (this._graphClient) {
-      // Calling: v1.0/me/insights/used?$filter=ResourceVisualization/Type eq 'Web'
-      this._graphClient
-        .api("me/insights/used")
-        .filter(`ResourceVisualization/Type eq 'Web'`)
-        .top(30)
-        .get((err: { message: string }, res: IRecentWebs) => {
-          if (err) {
-            // Something failed calling the MS Graph
-            return Promise.reject(err.message ? err.message : strings.Error);
-          }
+    return new Promise<IWebs[]>((resolve, reject) => {
+      if (this._graphClient) {
+        // Calling: v1.0/me/insights/used?$filter=ResourceVisualization/Type eq 'Web'
+        this._graphClient
+          .api("me/insights/used")
+          .filter(`ResourceVisualization/Type eq 'Web'`)
+          .top(30)
+          .get((err: { message: string }, res: IRecentWebs) => {
+            if (err) {
+              // Something failed calling the MS Graph
+              reject(new Error(err.message ? err.message : strings.Error));
+              return;
+            }
 
-          // Check if a response was retrieved
-          if (res && res.value && res.value.length > 0) {
-            return this._processRecentSites(res.value);
-          } else {
-            // No sites retrieved
-            return [];
-          }
-        })
-        .catch((reason) => {
-          throw new Error(reason);
-        });
-    }
-    return Promise.resolve([]);
+            // Check if a response was retrieved
+            if (res && res.value && res.value.length > 0) {
+              resolve(this._processRecentSites(res.value));
+            } else {
+              // No sites retrieved
+              resolve([]);
+            }
+          })
+          .catch((reason) => {
+            reject(new Error(reason));
+          });
+      }
+      resolve([]);
+    });
   }
 
   /**
