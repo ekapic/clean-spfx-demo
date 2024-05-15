@@ -38,7 +38,6 @@ export default class GraphService implements IGraphService {
             reject(new Error(reason));
           });
       }
-      resolve([]);
     });
   }
 
