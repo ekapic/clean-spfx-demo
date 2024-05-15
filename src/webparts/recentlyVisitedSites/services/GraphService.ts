@@ -37,6 +37,8 @@ export default class GraphService implements IGraphService {
           .catch((reason) => {
             reject(new Error(reason));
           });
+      } else {
+        reject(new Error("Graph client not initialized"));
       }
     });
   }

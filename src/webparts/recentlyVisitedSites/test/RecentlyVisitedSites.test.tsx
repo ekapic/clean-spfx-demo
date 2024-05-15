@@ -1,7 +1,7 @@
 /// <reference types="jest" />
 import * as React from "react";
 // import { assert } from "chai";
-import { screen, render } from "@testing-library/react";
+import { screen, render, act } from "@testing-library/react";
 import { RecentlyVisitedSites } from "../components/RecentlyVisitedSites";
 import { IRecentlyVisitedSitesProps } from "../components/IRecentlyVisitedSitesProps";
 import { DisplayMode } from "@microsoft/sp-core-library";
@@ -18,12 +18,16 @@ const props: IRecentlyVisitedSitesProps = {
 
 describe("RecentlyVisitesSites should", () => {
   it("render title correctly", () => {
-    render(<RecentlyVisitedSites {...props} />);
+    act(() => {
+      render(<RecentlyVisitedSites {...props} />);
+    });
     const element = screen.getAllByRole("heading");
     expect(element[0].innerHTML).toBe("Recent Sites");
   });
   it("render site list correctly", async () => {
-    render(<RecentlyVisitedSites {...props} />);
+    act(() => {
+      render(<RecentlyVisitedSites {...props} />);
+    });
     const element = await screen.findAllByRole("listitem");
     expect(element.length === 2);
     expect(element[0].innerHTML).toBe(
