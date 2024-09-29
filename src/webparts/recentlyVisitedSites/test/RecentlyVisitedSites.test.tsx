@@ -1,4 +1,7 @@
-/// <reference types="jest" />
+/**
+ * @vitest-environment jsdom
+ */
+
 import * as React from "react";
 // import { assert } from "chai";
 import { screen, render, act } from "@testing-library/react";
@@ -7,8 +10,10 @@ import { IRecentlyVisitedSitesProps } from "../components/IRecentlyVisitedSitesP
 import { DisplayMode } from "@microsoft/sp-core-library";
 import { IRecentSiteService } from "../services/business/IRecentSiteService";
 import { noop } from "@microsoft/sp-lodash-subset";
+import { it, vi, describe, expect } from "vitest";
+
 const fakeSiteService: IRecentSiteService = {
-  getRecentVisitedSites: jest.fn().mockResolvedValue([
+  getRecentVisitedSites: vi.fn().mockResolvedValue([
     {
       id: "1",
       title: "My site 1",

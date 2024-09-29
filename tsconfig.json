@@ -17,15 +17,13 @@
     "strictNullChecks": false,
     "noImplicitAny": true,
     "typeRoots": ["./node_modules/@types", "./node_modules/@microsoft"],
-    "types": ["webpack-env", "jest"],
+    "types": ["webpack-env"],
     "lib": ["es5", "dom", "es2015.collection", "es2015.promise"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [
     "**/node_modules",
     "**/dist",
-    "**/lib",
-    "**/*.test.tsx",
-    "**/*.test.ts"
+    "**/lib"
   ]
 }

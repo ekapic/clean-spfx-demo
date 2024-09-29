@@ -3,14 +3,14 @@ import GraphService from "../services/core/GraphService";
 import { fake2SitesResponse } from "./FakeGraphData";
 import { IRecentWeb } from "../components";
 
-jest.mock("@microsoft/sp-http-msgraph");
+import { it, describe, expect, vi } from "vitest";
 
 const mockGraphClient = (expectedResponse: IRecentWeb[]): MSGraphClientV3 => {
   const mockedClient = {
-    api: jest.fn().mockReturnValue({
-      filter: jest.fn().mockReturnValue({
-        top: jest.fn().mockReturnValue({
-          get: jest.fn().mockImplementation(async (cb: any) => {
+    api: vi.fn().mockReturnValue({
+      filter: vi.fn().mockReturnValue({
+        top: vi.fn().mockReturnValue({
+          get: vi.fn().mockImplementation(async (cb: any) => {
             cb(null, { value: expectedResponse });
             Promise.resolve();
           }),

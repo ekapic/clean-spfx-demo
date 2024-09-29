@@ -2,7 +2,7 @@ import GraphRecentSiteService from "../services/business/GraphRecentSiteService"
 import { IGraphService } from "../services/core/IGraphService";
 import MockGraphService from "../services/core/MockGraphService";
 import { generateNFakeSitesResponse } from "./FakeGraphData";
-
+import { it, vi, describe, expect, beforeEach } from "vitest";
 describe("GraphRecentSiteService should", () => {
   let mockedGraphService: IGraphService;
 
@@ -28,7 +28,7 @@ describe("GraphRecentSiteService should", () => {
   });
 
   it("return 10 sites if 15 are present", async () => {
-    mockedGraphService.getRecentVisitedSites = jest
+    mockedGraphService.getRecentVisitedSites = vi
       .fn()
       .mockReturnValue(generateNFakeSitesResponse(15));
     const service = new GraphRecentSiteService(mockedGraphService);
