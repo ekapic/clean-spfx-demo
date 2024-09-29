@@ -10,7 +10,7 @@ export default class GraphService implements IGraphService {
 
   private _graphClient: MSGraphClientV3;
 
-  public getRecentVisitedSites(): Promise<IRecentWeb[]> {
+  public async getRecentVisitedSites(): Promise<IRecentWeb[]> {
     return new Promise<IRecentWeb[]>((resolve, reject) => {
       if (this._graphClient) {
         // Calling: v1.0/me/insights/used?$filter=ResourceVisualization/Type eq 'Web'
@@ -21,10 +21,10 @@ export default class GraphService implements IGraphService {
           .get((err: { message: string }, res: IRecentWebs) => {
             if (err) {
               // Something failed calling the MS Graph
-              reject(new Error(err.message ? err.message : strings.Error));
-              return;
+              reject(err.message ? err.message : strings.Error);
             }
 
+            console.log(JSON.stringify(res));
             // Check if a response was retrieved
             if (res && res.value && res.value.length > 0) {
               resolve(res.value);
@@ -34,10 +34,10 @@ export default class GraphService implements IGraphService {
             }
           })
           .catch((reason) => {
-            reject(new Error(reason));
+            reject(reason);
           });
       } else {
-        reject(new Error("Graph client not initialized"));
+        resolve([]);
       }
     });
   }

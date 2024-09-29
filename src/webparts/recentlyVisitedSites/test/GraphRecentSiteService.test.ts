@@ -1,11 +1,14 @@
 import GraphRecentSiteService from "../services/business/GraphRecentSiteService";
 import { IGraphService } from "../services/core/IGraphService";
 import MockGraphService from "../services/core/MockGraphService";
+import { generateNFakeSitesResponse } from "./FakeGraphData";
 
 describe("GraphRecentSiteService should", () => {
-  const mockedGraphService: IGraphService = new MockGraphService();
+  let mockedGraphService: IGraphService;
 
-  beforeEach(() => {});
+  beforeEach(() => {
+    mockedGraphService = new MockGraphService();
+  });
 
   it("return 2 sites if only 2 are present", async () => {
     const service = new GraphRecentSiteService(mockedGraphService);
@@ -22,5 +25,16 @@ describe("GraphRecentSiteService should", () => {
         title: "Other site",
       },
     ]);
+  });
+
+  it("return 10 sites if 15 are present", async () => {
+    mockedGraphService.getRecentVisitedSites = jest
+      .fn()
+      .mockReturnValue(generateNFakeSitesResponse(15));
+    const service = new GraphRecentSiteService(mockedGraphService);
+    const result = await service.getRecentVisitedSites();
+    expect(result.length).toBe(10);
+    expect(result[0].id).toBe("1");
+    expect(result[9].id).toBe("10");
   });
 });

@@ -1,12 +1,16 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import { Version } from "@microsoft/sp-core-library";
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 import { IPropertyPaneConfiguration } from "@microsoft/sp-property-pane";
-import { RecentlyVisitedSites, IRecentlyVisitedSitesProps } from './components';
-import { MSGraphClientV3 } from '@microsoft/sp-http';
+import { RecentlyVisitedSites, IRecentlyVisitedSitesProps } from "./components";
+import { MSGraphClientV3 } from "@microsoft/sp-http";
 
-import { ThemeProvider, ThemeChangedEventArgs, IReadonlyTheme } from '@microsoft/sp-component-base';
+import {
+  ThemeProvider,
+  ThemeChangedEventArgs,
+  IReadonlyTheme,
+} from "@microsoft/sp-component-base";
 import { IGraphService } from "./services/core/IGraphService";
 import { IRecentSiteService } from "./services/business/IRecentSiteService";
 import GraphRecentSiteService from "./services/business/GraphRecentSiteService";
