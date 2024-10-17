@@ -12,6 +12,13 @@ import { IRecentSiteService } from "../services/business/IRecentSiteService";
 import { noop } from "@microsoft/sp-lodash-subset";
 import { it, vi, describe, expect } from "vitest";
 
+vi.mock(
+  "../../../../node_modules/@pnp/spfx-controls-react/lib/common/telemetry/index.js",
+  () => ({
+    track: vi.fn(),
+  })
+);
+
 const fakeSiteService: IRecentSiteService = {
   getRecentVisitedSites: vi.fn().mockResolvedValue([
     {
@@ -42,11 +49,11 @@ describe("RecentlyVisitesSites should", () => {
     const element = screen.getAllByRole("heading");
     expect(element[0].innerHTML).toBe("Recent Sites");
   });
-  it("render site list correctly", async () => {
+  it("render site list correctly", () => {
     act(() => {
       render(<RecentlyVisitedSites {...props} />);
     });
-    const element = await screen.findAllByRole("listitem");
+    const element = screen.getAllByRole("listitem");
     expect(element.length === 2);
     expect(element[0].innerHTML).toBe(
       '<a href="https://my.site/sites/1" title="My site 1" class="ms-Link root-106">My site 1</a>'

@@ -17,14 +17,21 @@ export default defineConfig({
   plugins: [
     babel({
       filter: /\.(js|jsx)$/, // /\.jsx?$/, // /^.+\\.js$/,
-      include: [locPnpStringPath, locStringPath, "@pnp/spfx-controls-react"],
+      include: [
+        locPnpStringPath,
+        locStringPath,
+        "@microsoft/sp-core-library",
+        "@pnp/spfx-controls-react",
+      ],
       babelConfig: {
         plugins: ["transform-amd-to-commonjs"],
       },
     }),
     commonjs({
       filter: (id) =>
-        id.includes("en-us.js") || id.includes("@pnp/spfx-controls-react"),
+        id.includes("en-us.js") ||
+        id.includes("@pnp/spfx-controls-react") ||
+        id.includes("@microsoft/sp-core-library"),
     }),
   ],
   test: {
@@ -33,7 +40,15 @@ export default defineConfig({
     environment: "jsdom",
     server: {
       deps: {
-        inline: ["@pnp/spfx-controls-react", "en-us.js"],
+        inline: [
+          "@pnp/spfx-controls-react",
+          "@microsoft/sp-core-library",
+          "en-us.js",
+        ],
+      },
+      debug: {
+        dumpModules: false,
+        loadDumppedModules: false,
       },
     },
   },
@@ -74,6 +89,7 @@ export default defineConfig({
           "./node_modules/@pnp/spfx-controls-react/lib/loc/en-us.js"
         ),
       },
+
       //   {
       //     find: "@/",
       //     replacement: fileURLToPath(new URL("./", import.meta.url)),
