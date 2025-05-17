@@ -31,7 +31,7 @@ export default defineConfig({
       filter: (id) =>
         id.includes("en-us.js") ||
         id.includes("@pnp/spfx-controls-react") ||
-        id.includes("@microsoft/sp-core-library"),
+        id.includes("@microsoft/sp-core-library")
     }),
   ],
   test: {
@@ -56,6 +56,10 @@ export default defineConfig({
     alias: [
       {
         find: "@ms/odsp-core-bundle",
+        replacement: "identity-obj-proxy",
+      },
+      {
+        find: "@msinternal/ecs-flight",
         replacement: "identity-obj-proxy",
       },
       {
