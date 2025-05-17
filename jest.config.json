@@ -7,6 +7,7 @@
   "setupFiles": ["<rootDir>/jest.setup.js"],
   "moduleNameMapper": {
     "@ms/odsp-core-bundle": "identity-obj-proxy",
+    "@msinternal/ecs-flight": "identity-obj-proxy",
     "\\.(css|scss|resx)$": "identity-obj-proxy",
     "\\.(png|jpg)$": "<rootDir>/src/webparts/recentlyVisitedSites/tests/file-stub.ts",
     "^resx-strings/en-us.json": "<rootDir>/node_modules/@microsoft/sp-core-library/lib/resx-strings/en-us.json",
